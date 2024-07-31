@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import {useQuery} from "@tanstack/react-query";
 import {getPendingStatements, getStatements, getSummary} from "@/api/Statement";
 import {Table} from "../ui/Table";
+import {Toaster} from "../ui/Toaster";
 
 export default function Layout({children}) {
     // const {data: statements} = useQuery({queryKey: ["statements"], queryFn: getStatements});
@@ -17,6 +18,7 @@ export default function Layout({children}) {
                 <Navbar />
                 <div className="p-4 ">
                     {children}
+                    <Toaster />
                     {/* <Table>
                         <thead>
                             <th>Location</th>
