@@ -37,7 +37,7 @@ export const getProgrammes = async () => {
 
 export const getmembers = async () => {
     const members = axios.create({
-        baseURL: `https://dev.api.efcaquila.co.uk/v3/location/358dfed5-9584-45e7-98e6-925994b50bfc/members`,
+        baseURL: `https://dev.api.efcaquila.co.uk/v3/location/358dfed5-9584-45e7-98e6-925994b50bfc/members/query`,
         headers: {
             "X-API-KEY": "OKH4VX6KEUQQXS9RE5UUE66DEGNSRYON",
         },
