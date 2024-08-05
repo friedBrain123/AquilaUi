@@ -46,3 +46,26 @@ export const getmembers = async () => {
     const reponse = await members.get("");
     return reponse.data;
 };
+
+export const UpdateMember = async (member, propertyNum) => {
+
+    let value:string = `custom_Property_${propertyNum}`
+    
+    const members = axios.create({
+        baseURL: `https://dev.api.efcaquila.co.uk/v3/location/358dfed5-9584-45e7-98e6-925994b50bfc/members/${member.id}`,
+        headers: {
+            "X-API-KEY": "OKH4VX6KEUQQXS9RE5UUE66DEGNSRYON",
+        },
+    });
+
+    const reponse = await members.put("",{
+            "title": member.title,
+            "firstName": member.firstName,
+            "lastName": member.lastName,
+            "contactTitle": member.contactTitle,
+            "contactFirstName": member.contactFirstName,
+            "contactLastName": member.contactLastName,
+            value: "175",
+    });
+    return reponse.data;
+};

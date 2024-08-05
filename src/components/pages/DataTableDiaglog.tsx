@@ -32,12 +32,13 @@ import {
 } from "@/components/ui/Dropdown";
 import {Input} from "@/components/ui/Input";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/Table";
-import {getmembers} from "@/api/Assesment";
-import {useQuery} from "@tanstack/react-query";
-import {IconChevronDown, IconChevronUp, IconDotsVertical, IconMail, IconUser} from "@tabler/icons-react";
+import {getmembers, UpdateMember} from "@/api/Assesment";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {IconChevronDown, IconChevronUp, IconDotsVertical, IconMail, IconPlus, IconUser, IconUserPlus} from "@tabler/icons-react";
 import {DialogHeader, Dialog, DialogContent, DialogDescription, DialogFooter} from "../ui/Dialog";
 import {DialogOverlay, DialogTitle, DialogTrigger} from "@radix-ui/react-dialog";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "../ui/HoverCard";
+import { Header, HeaderBtn } from "../layout/Header";
 
 export type Payment = {
     id: string;
@@ -48,8 +49,8 @@ export type Payment = {
 
 const propertyOptions = [
     {id: "Profile", properties: ["reference", "dob", "gender", "age", "birthday", "groups", "keyperson", "campaign", "referrer", "notes", "diet", "allergies", "medical", "MediaConsent"]},
-    {id: "Custom Properties", properties: ["custom_property_1", "custom_property_2", "custom_property_3", "custom_property_4", "custom_property_5"]},
-    {id: "Contract", properties: ["contactFirstName", "eMail", "custom_property_3", "telephoneMobile"]},
+    {id: "Custom Properties", properties: ["custom_Property_1", "custom_Property_2", "custom_Property_3", "custom_Property_4", "custom_Property_5"]},
+    {id: "Contract", properties: ["contactFirstName", "eMail", "custom_Property_3", "telephoneMobile"]},
     {
         id: "Enrollment",
         properties: ["registedOn", "enrolledOn", "expiredOn", "attended", "EnrolmentReference", "EnrolmentRank", "LicenceNumber", "licenceExpiryDate", "SessionCredits", "SessionCreditsExpire"],
@@ -76,6 +77,7 @@ export function DataTableDemo() {
         colum9: "SubscriptionExpires",
     });
 
+  
     const {data: data} = useQuery({queryKey: ["members"], queryFn: () => getmembers()});
 
     const columns: ColumnDef<Payment>[] = [
@@ -106,7 +108,7 @@ export function DataTableDemo() {
         {
             accessorKey: headerProperties.colum2,
             header: ({column}) => (
-                <div className="max-2xl:hidden flex items-center gap-2">
+                <div className=" flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <button className="capitalize hover:underline">{headerProperties.colum2}</button>
@@ -154,7 +156,7 @@ export function DataTableDemo() {
         {
             accessorKey: headerProperties.colum3,
             header: ({column}) => (
-                <div className="max-2xl:hidden flex items-center gap-2">
+                <div className=" flex items-center gap-2">
                     <button className="capitalize hover:underline" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
                         {headerProperties.colum3}
                     </button>
@@ -201,12 +203,12 @@ export function DataTableDemo() {
                     </DropdownMenu>
                 </div>
             ),
-            cell: ({row}) => <div className="capitalize max-2xl:hidden">{row.getValue(headerProperties.colum3)}</div>,
+            cell: ({row}) => <div className="capitalize ">{row.getValue(headerProperties.colum3)}</div>,
         },
         {
             accessorKey: headerProperties.colum4,
             header: ({column}) => (
-                <div className="max-2xl:hidden flex items-center">
+                <div className=" flex items-center">
                     <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>{headerProperties.colum4}</button>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -251,12 +253,12 @@ export function DataTableDemo() {
                     </DropdownMenu>
                 </div>
             ),
-            cell: ({row}) => <div className="capitalize max-2xl:hidden">{row.getValue(headerProperties.colum4)}</div>,
+            cell: ({row}) => <div className="capitalize ">{row.getValue(headerProperties.colum4)}</div>,
         },
         {
             accessorKey: headerProperties.colum5,
             header: ({column}) => (
-                <div className="max-2xl:hidden flex items-center">
+                <div className=" flex items-center">
                     <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>{headerProperties.colum5}</button>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -301,7 +303,7 @@ export function DataTableDemo() {
                     </DropdownMenu>
                 </div>
             ),
-            cell: ({row}) => <div className="capitalize max-2xl:hidden">{row.getValue(headerProperties.colum5)}</div>,
+            cell: ({row}) => <div className="capitalize ">{row.getValue(headerProperties.colum5)}</div>,
         },
         {
             accessorKey: headerProperties.colum7,
@@ -478,7 +480,7 @@ export function DataTableDemo() {
             cell: ({row}) => {
                 const payment = row.original;
 
-                return <ActionMenu />;
+                return <ActionMenu member={row.original} />;
             },
         },
     ];
@@ -503,10 +505,14 @@ export function DataTableDemo() {
     });
 
     return (
-        <div className="w-full overflow-hidden">
+        <>
+        <Header desktopTitle="asfd" desktopSubtitle="fadf" mobileTitle="asdf" mobileSubtitle="afsd">
+            <NewMember/>
+            </Header>
+         <div className="w-full overflow-hidden">
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Filter emails..."
+                    placeholder="Filter Members..."
                     value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
                     className="max-w-sm"
@@ -514,20 +520,20 @@ export function DataTableDemo() {
             </div>
             <div className="rounded-md border">
                 {data != null && (
-                    <Table>
+                    <Table className="select-none">
                         <TableHeader>
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => {
-                                        return <TableHead key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>;
+                                    {headerGroup.headers.map((header,index) => {
+                                        return <TableHead className={`${index == 3 || index == 4 || index == 5 && "max-xl:hidden" }`} key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>;
                                     })}
                                 </TableRow>
                             ))}
                         </TableHeader>
                         <TableBody>
                             {table.getRowModel().rows?.length ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                                table.getRowModel().rows.map((row,index) => (
+                                    <TableRow className={`${index == 3 || index == 4 || index == 5 && "max-xl:hidden" }`} key={row.id} data-state={row.getIsSelected() && "selected"}>
                                         {row.getVisibleCells().map((cell) => (
                                             <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                                         ))}
@@ -545,10 +551,12 @@ export function DataTableDemo() {
                 )}
             </div>
         </div>
+        </>
+
     );
 }
 
-function ActionMenu() {
+function ActionMenu({member}) {
     const [isDialog, setDialog] = React.useState(null);
     const [photography, setphtography] = React.useState(false);
 
@@ -609,13 +617,25 @@ function ActionMenu() {
                     <DropdownMenuItem>Exprot Record</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
-            <EditRecord onClose={() => setDialog(null)} memberId={undefined} property={"Height"} open={isDialog} />
+            <EditRecord onClose={() => setDialog(null)} member={member} property={1} open={isDialog} />
             <MakeObservation onClose={() => setDialog(null)} memberId={undefined} property={"Height"} open={isDialog} />
         </>
     );
 }
 
-function EditRecord({memberId, property, open, onClose}) {
+function EditRecord({member, property, open, onClose}) {
+
+    const queryClient = useQueryClient();
+
+    const EditProperty = useMutation({
+        mutationFn: () => UpdateMember(member),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ["members"]})
+            onClose()
+        }
+    })
+
+
     return (
         <Dialog open={open == 1}>
             <DialogContent>
@@ -629,7 +649,7 @@ function EditRecord({memberId, property, open, onClose}) {
                     <Button onClick={onClose} variant="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={onClose} variant="default">
+                    <Button onClick={() => EditProperty.mutate()} variant="default">
                         Submit
                     </Button>
                 </DialogFooter>
@@ -640,7 +660,7 @@ function EditRecord({memberId, property, open, onClose}) {
 
 type ObservationType = {
     property: string;
-    open: number;
+    open: number | null;
     onClose: () => void;
 };
 
@@ -667,18 +687,6 @@ function MakeObservation({property, open, onClose}: ObservationType) {
         </Dialog>
     );
 }
-
-// const [light, setLight] = React.useState(false);
-
-// type switchType = {
-//     activeLight: () => void;
-// };
-
-// function Switch({activeLight}: switchType) {
-//     return <button onClick={activeLight}></button>;
-// }
-
-// <Switch activeLight={() => setLight(!light)} />;
 
 function Gallery() {
     return (
@@ -730,3 +738,22 @@ function PreviewMember({member}) {
         </HoverCard>
     );
 }
+
+
+
+function NewMember() {
+    return (
+       <Dialog>
+            <DialogTrigger>
+                <HeaderBtn icon={<IconUserPlus/>} text="fasdf"/>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>fasdf</DialogTitle>
+                    <DialogDescription>fasdf</DialogDescription>
+                </DialogHeader>
+            </DialogContent>
+       </Dialog>
+    );
+}    
+
