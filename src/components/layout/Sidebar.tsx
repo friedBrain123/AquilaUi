@@ -7,7 +7,7 @@ export default function Sidebar() {
     const sidebar = useContext(SidebarContext);
     return (
         <div
-            className={`${!sidebar.value ? "translate-x-0" : "-translate-x-80"} transition-all  border-r border-b rounded-br-lg overflow-hidden border-zinc-300 ease-in-out duration-300 max-lg:absolute top-12 left-0 bg-white w-80 shadow-lg`}
+            className={`${!sidebar.value ? "translate-x-0" : "-translate-x-80"} transition-all  border-r border-b rounded-br-lg overflow-hidden border-zinc-300 ease-in-out duration-300 max-lg:absolute top-12 left-0 z-20  bg-white w-80 shadow-lg`}
         >
             <div className="flex flex-col divide-y divide-zinc-300">
                 <SidebarGroup>

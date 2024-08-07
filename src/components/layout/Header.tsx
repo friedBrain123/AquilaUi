@@ -1,37 +1,37 @@
-import { Component } from "react"
+import {Component} from "react";
 
 type HeaderType = {
-    desktopTitle: string,
-    desktopSubtitle: string,
-    mobileTitle: string,
-    mobileSubtitle: string,
-    children?: any,
-}
+    desktopTitle: string;
+    desktopSubtitle: string;
+    mobileTitle: string;
+    mobileSubtitle: string;
+    children?: any;
+};
 
 type HeaderBtn = {
-   icon: any,
-   text: string,
-}
+    icon: any;
+    text: string;
+};
 
-export function Header({desktopTitle, desktopSubtitle, mobileTitle, mobileSubtitle, children}:HeaderType){
+export function Header({desktopTitle, desktopSubtitle, mobileTitle, mobileSubtitle, children}: HeaderType) {
     return (
-        <div className="w-full flex justify-between">
+        <div className="w-full flex justify-between max-lg:h-24 py-4 max-lg:px-4 z-0 max-lg:bg-themered">
             <div>
-                <div className="max-lg:hidden">{desktopTitle}</div>
-                <div className="max-lg:hidden">{desktopSubtitle}</div>
-                <div className="lg:hidden">{mobileTitle}</div>
-                <div className="lg:hidden">{mobileSubtitle}</div>
+                <div className="max-lg:hidden font-semibold text-zinc-600 ">{desktopTitle}</div>
+                <div className="max-lg:hidden font-medium text-zinc-400">{desktopSubtitle}</div>
+                <div className="lg:hidden font-semibold text-zinc-100">{mobileTitle}</div>
+                <div className="lg:hidden font-medium text-zinc-300">{mobileSubtitle}</div>
             </div>
             <div>{children}</div>
-        </div>         
-    )
+        </div>
+    );
 }
 
-export function HeaderBtn({icon, text}:HeaderBtn){
+export function HeaderBtn({icon, text}: HeaderBtn) {
     return (
-       <button className="flex items-center gap-2  border-2 p-2 rounded-lg ">
+        <button className="flex items-center gap-2 lg:bg-white lg:border lg:text-zinc-600   max-lg:bg-white/15 transition-all duration-300 text-zinc-100 p-2 rounded-lg ">
             {icon}
-            {text}
-       </button>
-    )
+            <span className="max-lg:hidden">{text}</span>
+        </button>
+    );
 }

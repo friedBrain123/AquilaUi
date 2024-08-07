@@ -17,6 +17,13 @@ import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import Programme from "./components/pages/Programmes";
 import TableDiaglog from "./components/pages/TableDiaglog";
 import {DataTableDemo} from "./components/pages/DataTableDiaglog";
+import Inbox from "./components/pages/Inbox";
+import MessagesPage from "./components/pages/MessagesPage";
+import LibraryPage from "./components/pages/LibraryPage";
+import {Library} from "./components/pages/Libary";
+import {Folder} from "./components/pages/Folder";
+import PlannerPage from "./components/pages/PlannerPage";
+import {Planner} from "./components/pages/Planner";
 export const SidebarContext = createContext(null);
 
 const queryClient = new QueryClient();
@@ -25,7 +32,7 @@ function App() {
     const [value, setValue] = useState(false);
 
     return (
-        <div className="h-full bg-zinc-50">
+        <div className="h-full max-w-full overflow-y-hidden bg-zinc-50">
             <SidebarContext.Provider value={{value, setValue}}>
                 <QueryClientProvider client={queryClient}>
                     <BrowserRouter basename="/">
@@ -54,6 +61,39 @@ function App() {
                                     </Layout>
                                 }
                             />
+                            <Route
+                                path="/location/messages"
+                                element={
+                                    <Layout>
+                                        <MessagesPage page={<Inbox />} />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path="/location/library"
+                                element={
+                                    <Layout>
+                                        <LibraryPage page={<Library />} />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path="/location/planner"
+                                element={
+                                    <Layout>
+                                        <PlannerPage page={<Planner />} />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path="/location/library/:Id"
+                                element={
+                                    <Layout>
+                                        <LibraryPage page={<Folder />} />
+                                    </Layout>
+                                }
+                            />
+                            <Route path="/home" element={<Layout children={undefined}></Layout>} />
                         </Routes>
                     </BrowserRouter>
                     <ReactQueryDevtools position="right" />

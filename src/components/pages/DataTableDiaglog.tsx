@@ -13,7 +13,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import {ArrowUpDown, ChevronDown, MoreHorizontal} from "lucide-react";
+import {ArrowUpDown, ChevronDown, FunctionSquareIcon, MoreHorizontal} from "lucide-react";
 
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/Checkbox";
@@ -34,11 +34,11 @@ import {Input} from "@/components/ui/Input";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/Table";
 import {getmembers, UpdateMember} from "@/api/Assesment";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {IconChevronDown, IconChevronUp, IconDotsVertical, IconMail, IconPlus, IconUser, IconUserPlus} from "@tabler/icons-react";
+import {IconArrowDown, IconArrowUp, IconChevronDown, IconChevronUp, IconDotsVertical, IconMail, IconMoneybag, IconUser} from "@tabler/icons-react";
 import {DialogHeader, Dialog, DialogContent, DialogDescription, DialogFooter} from "../ui/Dialog";
 import {DialogOverlay, DialogTitle, DialogTrigger} from "@radix-ui/react-dialog";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "../ui/HoverCard";
-import { Header, HeaderBtn } from "../layout/Header";
+import {Header, HeaderBtn} from "../layout/Header";
 
 export type Payment = {
     id: string;
@@ -77,7 +77,6 @@ export function DataTableDemo() {
         colum9: "SubscriptionExpires",
     });
 
-  
     const {data: data} = useQuery({queryKey: ["members"], queryFn: () => getmembers()});
 
     const columns: ColumnDef<Payment>[] = [
@@ -148,22 +147,21 @@ export function DataTableDemo() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>{column.getIsSorted() == "desc" ? <IconChevronUp /> : <IconChevronDown />}</button>
+                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        {column.getIsSorted() === "asc" ? <IconArrowUp className="w-5" /> : <IconArrowDown className="w-5" />}
+                    </button>
                 </div>
             ),
-            cell: ({row}) => <div className="capitalize">{row.getValue(headerProperties.colum2)}</div>,
+            cell: ({row, props}) => <div className="capitalize">{row.getValue(headerProperties.colum2)}</div>,
         },
         {
             accessorKey: headerProperties.colum3,
             header: ({column}) => (
-                <div className=" flex items-center gap-2">
-                    <button className="capitalize hover:underline" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                        {headerProperties.colum3}
-                    </button>
+                <div className="max-2xl:hidden flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <button>
-                                <ChevronDown className="ml-2 h-4 " />
+                            <button className="capitalize hover:underline" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                                {headerProperties.colum3}
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
@@ -201,6 +199,9 @@ export function DataTableDemo() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        {column.getIsSorted() == "desc" ? <IconArrowUp className="w-5" /> : <IconArrowDown className="w-5" />}
+                    </button>
                 </div>
             ),
             cell: ({row}) => <div className="capitalize ">{row.getValue(headerProperties.colum3)}</div>,
@@ -208,12 +209,11 @@ export function DataTableDemo() {
         {
             accessorKey: headerProperties.colum4,
             header: ({column}) => (
-                <div className=" flex items-center">
-                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>{headerProperties.colum4}</button>
+                <div className="max-2xl:hidden flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <button>
-                                <ChevronDown className="ml-2 h-4 " />
+                            <button className="capitalize hover:underline" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                                {headerProperties.colum4}
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
@@ -251,6 +251,9 @@ export function DataTableDemo() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        {column.getIsSorted() == "desc" ? <IconArrowUp className="w-5" /> : <IconArrowDown className="w-5" />}
+                    </button>
                 </div>
             ),
             cell: ({row}) => <div className="capitalize ">{row.getValue(headerProperties.colum4)}</div>,
@@ -258,12 +261,11 @@ export function DataTableDemo() {
         {
             accessorKey: headerProperties.colum5,
             header: ({column}) => (
-                <div className=" flex items-center">
-                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>{headerProperties.colum5}</button>
+                <div className="max-2xl:hidden flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <button>
-                                <ChevronDown className="ml-2 h-4 " />
+                            <button className="capitalize hover:underline" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                                {headerProperties.colum5}
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
@@ -301,6 +303,9 @@ export function DataTableDemo() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        {column.getIsSorted() == "desc" ? <IconArrowUp className="w-5" /> : <IconArrowDown className="w-5" />}
+                    </button>
                 </div>
             ),
             cell: ({row}) => <div className="capitalize ">{row.getValue(headerProperties.colum5)}</div>,
@@ -308,12 +313,11 @@ export function DataTableDemo() {
         {
             accessorKey: headerProperties.colum7,
             header: ({column}) => (
-                <div className="flex items-center">
-                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>{headerProperties.colum7}</button>
+                <div className="flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <button>
-                                <ChevronDown className="ml-2 h-4 " />
+                            <button className="capitalize hover:underline" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                                {headerProperties.colum7}
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
@@ -351,6 +355,9 @@ export function DataTableDemo() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        {column.getIsSorted() == "desc" ? <IconArrowUp className="w-5" /> : <IconArrowDown className="w-5" />}
+                    </button>
                 </div>
             ),
             cell: ({row}) => <div className="capitalize">{row.getValue(headerProperties.colum7)}</div>,
@@ -358,12 +365,11 @@ export function DataTableDemo() {
         {
             accessorKey: headerProperties.colum8,
             header: ({column}) => (
-                <div className="flex items-center">
-                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>{headerProperties.colum8}</button>
+                <div className="flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <button>
-                                <ChevronDown className="ml-2 h-4 " />
+                            <button className="capitalize hover:underline" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                                {headerProperties.colum8}
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
@@ -401,6 +407,9 @@ export function DataTableDemo() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        {column.getIsSorted() == "desc" ? <IconArrowUp className="w-5" /> : <IconArrowDown className="w-5" />}
+                    </button>
                 </div>
             ),
             cell: ({row}) => <div className="capitalize">{row.getValue(headerProperties.colum8)}</div>,
@@ -408,12 +417,11 @@ export function DataTableDemo() {
         {
             accessorKey: headerProperties.colum9,
             header: ({column}) => (
-                <div className="flex items-center">
-                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>{headerProperties.colum9}</button>
+                <div className="flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <button>
-                                <ChevronDown className="ml-2 h-4 " />
+                            <button className="capitalize hover:underline" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                                {headerProperties.colum9}
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
@@ -451,6 +459,9 @@ export function DataTableDemo() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <button onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        {column.getIsSorted() == "desc" ? <IconArrowUp className="w-5" /> : <IconArrowDown className="w-5" />}
+                    </button>
                 </div>
             ),
             cell: ({row}) => <div className="capitalize">{row.getValue(headerProperties.colum9)}</div>,
@@ -459,23 +470,7 @@ export function DataTableDemo() {
             id: "actions",
             enableHiding: false,
             header: ({table}) => {
-                return (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
-                                <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy payment ID</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>View customer</DropdownMenuItem>
-                            <DropdownMenuItem>View payment details</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                );
+                return;
             },
             cell: ({row}) => {
                 const payment = row.original;
@@ -505,12 +500,8 @@ export function DataTableDemo() {
     });
 
     return (
-        <>
-        <Header desktopTitle="asfd" desktopSubtitle="fadf" mobileTitle="asdf" mobileSubtitle="afsd">
-            <NewMember/>
-            </Header>
-         <div className="w-full overflow-hidden">
-            <div className="flex items-center py-4">
+        <div className="w-full overflow-hidden">
+            <div className="flex items-center py-4 bg-car">
                 <Input
                     placeholder="Filter Members..."
                     value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -520,20 +511,24 @@ export function DataTableDemo() {
             </div>
             <div className="rounded-md border">
                 {data != null && (
-                    <Table className="select-none">
-                        <TableHeader>
+                    <Table className="bg-card">
+                        <TableHeader className="bg-zinc-50">
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
-                                    {headerGroup.headers.map((header,index) => {
-                                        return <TableHead className={`${index == 3 || index == 4 || index == 5 && "max-xl:hidden" }`} key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>;
+                                    {headerGroup.headers.map((header, index) => {
+                                        return (
+                                            <TableHead className={`${index == 3 || index == 4 || (index == 5 && "max-xl:hidden")}`} key={header.id}>
+                                                {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                            </TableHead>
+                                        );
                                     })}
                                 </TableRow>
                             ))}
                         </TableHeader>
                         <TableBody>
                             {table.getRowModel().rows?.length ? (
-                                table.getRowModel().rows.map((row,index) => (
-                                    <TableRow className={`${index == 3 || index == 4 || index == 5 && "max-xl:hidden" }`} key={row.id} data-state={row.getIsSelected() && "selected"}>
+                                table.getRowModel().rows.map((row, index) => (
+                                    <TableRow className={`${index == 3 || index == 4 || (index == 5 && "max-xl:hidden")}`} key={row.id} data-state={row.getIsSelected() && "selected"}>
                                         {row.getVisibleCells().map((cell) => (
                                             <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                                         ))}
@@ -551,8 +546,6 @@ export function DataTableDemo() {
                 )}
             </div>
         </div>
-        </>
-
     );
 }
 
@@ -564,11 +557,11 @@ function ActionMenu({member}) {
         <>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <button>
+                    <button className="items-center text-center">
                         <IconDotsVertical />
                     </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent align="start">
                     <DropdownMenuItem></DropdownMenuItem>
                     <DropdownMenuItem>Compose SMS</DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -624,17 +617,15 @@ function ActionMenu({member}) {
 }
 
 function EditRecord({member, property, open, onClose}) {
-
     const queryClient = useQueryClient();
 
     const EditProperty = useMutation({
         mutationFn: () => UpdateMember(member),
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ["members"]})
-            onClose()
-        }
-    })
-
+            queryClient.invalidateQueries({queryKey: ["members"]});
+            onClose();
+        },
+    });
 
     return (
         <Dialog open={open == 1}>
@@ -739,13 +730,11 @@ function PreviewMember({member}) {
     );
 }
 
-
-
 function NewMember() {
     return (
-       <Dialog>
+        <Dialog>
             <DialogTrigger>
-                <HeaderBtn icon={<IconUserPlus/>} text="fasdf"/>
+                <HeaderBtn icon={<IconUserPlus />} text="fasdf" />
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
@@ -753,7 +742,6 @@ function NewMember() {
                     <DialogDescription>fasdf</DialogDescription>
                 </DialogHeader>
             </DialogContent>
-       </Dialog>
+        </Dialog>
     );
-}    
-
+}
